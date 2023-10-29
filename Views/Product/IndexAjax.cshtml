@@ -1,0 +1,77 @@
+﻿@model IEnumerable<Crud_ASP.NET_MVC.Models.Product>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="container invisible" style="top:10%;height:80%;position:absolute;" id="DivDetailView">
+
+</div>
+
+<div id="DivListView" class="container visible">
+    <p>
+        <a asp-action="Create" class="btn btn-sm btn-success ml-1">Create New Ajax</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Code)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Category)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Cost)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Price)
+                </th>
+
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr id="TR_@item.Code">
+                <partial name="_Product" model="@item"></partial>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts{
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        function deleteItem(form){
+            var removeItemEl = $(form);
+            removeItemEl.closest("tr").remove();
+        }
+        function ShowDetailForm() {
+            $("#DivDetailView").addClass("visible");
+            $("#DivDetailView").removeClass("invisible");
+            
+            $("#DivListView").addClass("invisible");
+            $("#DivListView").removeClass("visible");
+            return;
+        }
+        function CloseDetailForm() {
+            $("#DivDetailView").addClass("invisible");
+            $("#DivDetailView").removeClass("visible");
+
+            $("#DivListView").addClass("visible");
+            $("#DivListView").removeClass("invisible");
+            return;
+        }
+    </script>
+}
